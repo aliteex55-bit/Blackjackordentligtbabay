@@ -8,6 +8,10 @@ namespace Blackjack
     {
         private List<Card> cards = new List<Card>();
 
+        // True if this hand came out of a split. It matters because 21 on a
+        // split hand is just 21 - it doesn't pay out as a real blackjack.
+        public bool FromSplit { get; set; }
+
         public int CardCount
         {
             get { return cards.Count; }
@@ -21,6 +25,7 @@ namespace Blackjack
         public void Clear()
         {
             cards.Clear();
+            FromSplit = false;
         }
 
         // Add up the cards, then deal with aces.
@@ -65,7 +70,25 @@ namespace Blackjack
         // it beats a 21 that took three or more cards to get to.
         public bool IsBlackjack
         {
-            get { return cards.Count == 2 && Total == 21; }
+            get { return cards.Count == 2 && Total == 21 && !FromSplit; }
+        }
+
+        // Two cards worth the same amount can be split into two hands.
+        //
+        // Comparing Value rather than rank on purpose - most tables let you
+        // split a king and a ten because they're both worth 10.
+        public bool CanSplit
+        {
+            get { return cards.Count == 2 && cards[0].Value == cards[1].Value; }
+        }
+
+        // Pulls the second card out of the hand so it can go start a new one.
+        // Only used by the split.
+        public Card RemoveSecondCard()
+        {
+            Card card = cards[1];
+            cards.RemoveAt(1);
+            return card;
         }
 
         // Prints the whole hand, e.g. "K of Spades, 7 of Hearts (17)".

@@ -8,6 +8,7 @@ namespace Blackjack
         {
             Console.WriteLine("=== Blackjack ===");
             Console.WriteLine("Dealer stands on 17. Blackjack pays 3 to 2.");
+            Console.WriteLine("You can double down or split a pair on your first two cards.");
             Console.WriteLine();
 
             Game game = new Game();
