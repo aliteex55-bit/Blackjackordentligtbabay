@@ -2,17 +2,35 @@ using System;
 
 namespace Blackjack
 {
-    // Runs one round of blackjack: deal, player's turn, dealer's turn, compare.
+    // Runs the rounds and keeps track of the player's chips.
     class Game
     {
+        private const int StartingChips = 100;
+        private const int Bet = 10;
+
         private Deck deck = new Deck();
         private Hand player = new Hand();
         private Hand dealer = new Hand();
+        private int chips = StartingChips;
+
+        public int Chips
+        {
+            get { return chips; }
+        }
+
+        // Can't bet what you haven't got.
+        public bool CanPlayAnotherRound
+        {
+            get { return chips >= Bet; }
+        }
 
         public void PlayRound()
         {
             player.Clear();
             dealer.Clear();
+
+            Console.WriteLine("Betting " + Bet + " chips. You have " + chips + ".");
+            Console.WriteLine();
 
             // Two cards each, dealt one at a time like a real table.
             player.Add(deck.Deal());
@@ -37,7 +55,7 @@ namespace Blackjack
                 DealerTurn();
             }
 
-            ShowResult();
+            Settle();
         }
 
         // Keep asking hit or stand until the player stands or busts.
@@ -112,9 +130,11 @@ namespace Blackjack
             Console.WriteLine();
         }
 
-        // Work out who actually won. Order matters here - busts get checked
-        // first, then blackjacks, then it's just the higher total.
-        private void ShowResult()
+        // Work out who won, say so, and move the chips.
+        //
+        // Order matters here - busts get checked first, then blackjacks, then
+        // it's just the higher total.
+        private void Settle()
         {
             Console.WriteLine("You:    " + player);
             Console.WriteLine("Dealer: " + dealer);
@@ -123,32 +143,44 @@ namespace Blackjack
             if (player.IsBust)
             {
                 Console.WriteLine("You went over 21. Dealer wins.");
+                chips -= Bet;
             }
             else if (dealer.IsBust)
             {
                 Console.WriteLine("Dealer went over 21. You win!");
+                chips += Bet;
             }
             else if (player.IsBlackjack && !dealer.IsBlackjack)
             {
-                Console.WriteLine("Blackjack! You win.");
+                // A natural blackjack pays one and a half times the bet, which
+                // is the usual house rule. Integer division is fine while the
+                // bet is an even number.
+                int payout = Bet + (Bet / 2);
+
+                Console.WriteLine("Blackjack! That pays " + payout + ".");
+                chips += payout;
             }
             else if (dealer.IsBlackjack && !player.IsBlackjack)
             {
                 Console.WriteLine("Dealer had blackjack. Dealer wins.");
+                chips -= Bet;
             }
             else if (player.Total > dealer.Total)
             {
                 Console.WriteLine("You win with " + player.Total + "!");
+                chips += Bet;
             }
             else if (player.Total < dealer.Total)
             {
                 Console.WriteLine("Dealer wins with " + dealer.Total + ".");
+                chips -= Bet;
             }
             else
             {
-                Console.WriteLine("Push - same total, nobody wins.");
+                Console.WriteLine("Push - same total, your bet comes back.");
             }
 
+            Console.WriteLine("You now have " + chips + " chips.");
             Console.WriteLine();
         }
     }
