@@ -1,0 +1,19 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Play Blackjack",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/bin/Debug/net10.0/Blackjack.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            // integratedTerminal, NOT internalConsole - the game reads input
+            // with Console.ReadLine() and the internal debug console can't
+            // take typed input, so the game would just hang on the prompt.
+            "console": "integratedTerminal",
+            "stopAtEntry": false
+        }
+    ]
+}
