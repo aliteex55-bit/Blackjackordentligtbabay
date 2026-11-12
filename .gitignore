@@ -1,3 +1,11 @@
 bin/
 obj/
 *.user
+
+# Interactive flowchart of the code. Asked for: put the Windows exe (Flodesschema.exe)
+# and the Mac version (Flodesschema.app) into the repository, and update .gitignore so
+# that it makes sense. The two files below are only the local material that the exe and
+# the app are built from, so they are left out. The leading slash means: only in this
+# folder, so the copy of the page inside Flodesschema.app is still included.
+/flodesschema-interaktiv.html
+/extra/bygg-flodesschema.pl
