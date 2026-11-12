@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="800" viewBox="0 0 1100 800" role="img" aria-labelledby="title desc">
+  <title id="title">Klassdiagram för Tjugoett</title>
+  <desc id="desc">Pilar visar vilka klasser som använder eller innehåller andra klasser.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#52677b"/></marker>
+    <style>
+      .box { fill:#fff; stroke:#94aabc; stroke-width:2 }
+      .line { fill:none; stroke:#52677b; stroke-width:2; marker-end:url(#arrow) }
+      .heading { font:700 27px Segoe UI,Arial,sans-serif; fill:#122b42 }
+      .sub { font:15px Segoe UI,Arial,sans-serif; fill:#516779 }
+      .name { font:700 19px Segoe UI,Arial,sans-serif; fill:#12314a }
+      .body { font:14px Segoe UI,Arial,sans-serif; fill:#334c60 }
+    </style>
+  </defs>
+  <rect width="1100" height="800" fill="#f4f8fb"/>
+  <text class="heading" x="40" y="45">Tjugoett – klassdiagram</text>
+  <text class="sub" x="40" y="70">Pilar visar att en klass använder eller innehåller en annan.</text>
+
+  <path class="line" d="M260 175 H410"/>
+  <path class="line" d="M650 175 H780"/>
+  <path class="line" d="M445 215 V270 H170 V320"/>
+  <path class="line" d="M490 215 V320"/>
+  <path class="line" d="M880 215 V270 H750 V320"/>
+  <path class="line" d="M950 215 V320"/>
+  <path class="line" d="M800 215 V245 H615 V550"/>
+  <path class="line" d="M950 400 V485 H635 V550"/>
+  <path class="line" d="M1020 400 V710 H180 V630"/>
+  <path class="line" d="M170 400 V550"/>
+  <path class="line" d="M750 400 V550"/>
+  <path class="line" d="M670 590 H730"/>
+  <path class="line" d="M550 400 V460 H850 V550"/>
+
+  <rect class="box" x="60" y="140" rx="10" width="200" height="75"/>
+  <text class="name" x="78" y="169">Program</text><text class="body" x="78" y="194">Startar ConsoleUi</text>
+  <rect class="box" x="410" y="140" rx="10" width="240" height="75"/>
+  <text class="name" x="428" y="169">ConsoleUi</text><text class="body" x="428" y="194">In- och utmatning</text>
+  <rect class="box" x="780" y="140" rx="10" width="240" height="75"/>
+  <text class="name" x="798" y="169">Game</text><text class="body" x="798" y="194">Giv, givarregel och utfall</text>
+  <rect class="box" x="60" y="320" rx="10" width="225" height="80"/>
+  <text class="name" x="78" y="349">GameStorage</text><text class="body" x="78" y="374">Läser och sparar statistik</text>
+  <rect class="box" x="360" y="320" rx="10" width="225" height="80"/>
+  <text class="name" x="378" y="349">CardRenderer</text><text class="body" x="378" y="374">Bygger kortens bildrader</text>
+  <rect class="box" x="660" y="320" rx="10" width="180" height="80"/>
+  <text class="name" x="678" y="349">Deck</text><text class="body" x="678" y="374">Blandar och delar</text>
+  <rect class="box" x="890" y="320" rx="10" width="180" height="80"/>
+  <text class="name" x="908" y="349">Player</text><text class="body" x="908" y="374">Hand och statistik</text>
+  <rect class="box" x="70" y="550" rx="10" width="220" height="80"/>
+  <text class="name" x="88" y="579">PlayerRecord</text><text class="body" x="88" y="604">Namn och resultat</text>
+  <rect class="box" x="470" y="550" rx="10" width="200" height="80"/>
+  <text class="name" x="488" y="579">Hand</text><text class="body" x="488" y="604">Kort och handens värde</text>
+  <rect class="box" x="730" y="550" rx="10" width="200" height="80"/>
+  <text class="name" x="748" y="579">Card</text><text class="body" x="748" y="604">Valör och färg</text>
+</svg>
