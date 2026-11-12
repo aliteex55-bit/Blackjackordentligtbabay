@@ -1,73 +1,38 @@
-using System;
-using System.Collections.Generic;
+namespace Blackjack;
 
-namespace Blackjack
+class Deck
 {
-    // A standard 52 card deck that we deal off the top of.
-    class Deck
+    private readonly List<Card> cards = new();
+    private readonly Random random;
+    private static readonly string[] Ranks = { "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" };
+    private static readonly string[] Suits = { "♥", "♦", "♣", "♠" };
+    public Deck(Random random) { this.random = random; Rebuild(); }
+    public int CardsLeft => cards.Count;
+    public bool RebuiltDuringRound { get; private set; }
+    public void PrepareRound()
     {
-        private List<Card> cards = new List<Card>();
-        private Random rng = new Random();
-
-        private static readonly string[] Ranks =
-            { "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" };
-
-        private static readonly string[] Suits =
-            { "Hearts", "Diamonds", "Clubs", "Spades" };
-
-        public Deck()
+        RebuiltDuringRound = false;
+        // The specified cutoff is checked between rounds, not after every card.
+        if (CardsLeft < 15) Rebuild();
+    }
+    private void Rebuild()
+    {
+        cards.Clear();
+        foreach (string suit in Suits)
+            foreach (string rank in Ranks) cards.Add(new Card(rank, suit));
+        // Fisher–Yates chooses from 0 through i, then swaps that card into position i.
+        for (int i = cards.Count - 1; i > 0; i--)
         {
-            Build();
-            Shuffle();
+            int j = random.Next(i + 1);
+            (cards[i], cards[j]) = (cards[j], cards[i]);
         }
-
-        public int CardsLeft
-        {
-            get { return cards.Count; }
-        }
-
-        // Fill the deck with all 52 combinations.
-        private void Build()
-        {
-            cards.Clear();
-
-            foreach (string suit in Suits)
-            {
-                foreach (string rank in Ranks)
-                {
-                    cards.Add(new Card(rank, suit));
-                }
-            }
-        }
-
-        // Fisher-Yates shuffle. Walk backwards through the list and swap each
-        // card with a random one at or before it.
-        public void Shuffle()
-        {
-            for (int i = cards.Count - 1; i > 0; i--)
-            {
-                int j = rng.Next(i + 1);
-
-                Card temp = cards[i];
-                cards[i] = cards[j];
-                cards[j] = temp;
-            }
-        }
-
-        // Take the top card off the deck and hand it over.
-        public Card Deal()
-        {
-            // If we somehow run dry mid game, rebuild and reshuffle so the
-            // game doesn't just crash on the player.
-            if (cards.Count == 0)
-            {
-                Build();
-                Shuffle();
-            }
-
-            Card top = cards[0];
-            cards.RemoveAt(0);
-            return top;
-        }
+    }
+    public Card Deal()
+    {
+        // A long round may use all remaining cards; report this exceptional refill.
+        if (cards.Count == 0) { Rebuild(); RebuiltDuringRound = true; }
+        Card card = cards[^1];
+        cards.RemoveAt(cards.Count - 1);
+        return card;
     }
 }
