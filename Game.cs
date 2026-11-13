@@ -6,6 +6,8 @@ enum Outcome { Win, Lose, Push }
 class Game
 {
     private readonly Deck deck;
+    // The dealer takes another card on this total or lower, and stands on anything higher.
+    private const int DealerHitsUpTo = 16;
     public IReadOnlyList<Player> Players { get; }
     public Hand Dealer { get; } = new();
     public bool RebuiltDuringRound => deck.RebuiltDuringRound;
@@ -39,7 +41,7 @@ class Game
         Dealer.Add(card);
         return card;
     }
-    public bool DealerShouldHit => Dealer.Total <= 16;
+    public bool DealerShouldHit => Dealer.Total <= DealerHitsUpTo;
     public Outcome GetOutcome(Hand player)
     {
         // A player who busts loses even if the dealer later busts too.
