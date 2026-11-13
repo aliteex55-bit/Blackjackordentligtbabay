@@ -4,6 +4,8 @@ class Deck
 {
     private readonly List<Card> cards = new();
     private readonly Random random;
+    // A new deck is built between rounds when fewer cards than this are left.
+    private const int ReshuffleBelow = 15;
     private static readonly string[] Ranks = { "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" };
     private static readonly string[] Suits = { "♥", "♦", "♣", "♠" };
     public Deck(Random random) { this.random = random; Rebuild(); }
@@ -13,7 +15,7 @@ class Deck
     {
         RebuiltDuringRound = false;
         // The specified cutoff is checked between rounds, not after every card.
-        if (CardsLeft < 15) Rebuild();
+        if (CardsLeft < ReshuffleBelow) Rebuild();
     }
     private void Rebuild()
     {
