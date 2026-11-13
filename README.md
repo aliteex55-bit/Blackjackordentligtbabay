@@ -26,6 +26,8 @@ Resultaten sparas i `spelare.json` bredvid programmets körbara filer. Samma nam
 
 Se [klassdiagrammet](klassdiagram.svg). `Program` startar `ConsoleUi`, som sköter in- och utmatning. `Game` hanterar giv och jämförelse av händer och använder `Deck`, `Player` och `Hand`. `Hand` räknar värdet från sina `Card`-objekt. `GameStorage` läser och skriver spelarstatistik. `CardRenderer` bygger kortens bildrader, medan `ConsoleUi` skriver ut dem och sätter färgerna.
 
+**Flödesschema:** [öppna det klickbara flödesschemat](https://aliteex55-bit.github.io/Blackjackordentligtbabay/flodesschema.html). Klicka på ett steg för att se den C#-kod som utför det, med en kort förklaring. Samma schema finns som bild i [flodesschema.png](flodesschema.png).
+
 ### Kortgrafik
 
 Kortgrafiken motsvarar tillval 1 i uppgiftsbeskrivningen. `CardRenderer` returnerar en radlista för varje kort utan att själv använda konsolen. `ConsoleUi` skriver raderna sida vid sida och visar baksidan på givarens dolda kort.
